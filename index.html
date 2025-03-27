@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sindicato na Rede</title>
+    <meta name="description" content="Soluções digitais completas para sindicatos - sites, intranet e ferramentas integradas.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#FEF2F0',
+                            100: '#FCE2DE',
+                            200: '#F9C6BE',
+                            300: '#F5A99E',
+                            400: '#F1877D',
+                            500: '#EB634D',
+                            600: '#D74B34',
+                            700: '#B33926',
+                            800: '#8F2C1F',
+                            900: '#6C2117',
+                            950: '#3B130D',
+                        },
+                        secondary: {
+                            50: '#EEEDF3',
+                            100: '#DCDAE7',
+                            200: '#BAB5D0',
+                            300: '#988FB8',
+                            400: '#776AA1',
+                            500: '#372C75',
+                            600: '#2F2662',
+                            700: '#272050',
+                            800: '#1F193D',
+                            900: '#17132B',
+                            950: '#0F0C1B',
+                        },
+                        neutral: {
+                            50: '#E8E8E8',
+                            100: '#D4D4D4',
+                            200: '#A6A6A6',
+                            300: '#7A7A79',
+                            400: '#4D4D4B',
+                            500: '#1D1D1B',
+                            600: '#191917',
+                            700: '#141413',
+                            800: '#0F0F0E',
+                            900: '#0A0A09',
+                            950: '#050505',
+                        },
+                    },
+                    fontFamily: {
+                        'sans': ['Montserrat', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.5s ease-out',
+                        'fade-in': 'fadeIn 0.5s ease-out',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        .gradient-mask {
+            background: linear-gradient(90deg, rgba(29,29,27,0.85) 0%, rgba(55,44,117,0.75) 100%);
+        }
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .scroll-fade {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .scroll-fade.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-50 text-gray-800 antialiased">
+    <!-- Navbar -->
+    <nav x-data="{ isOpen: false }" class="fixed w-full z-50 bg-white/95 backdrop-blur-sm shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="#" class="flex items-center">
+                        <img src="logo.png" class="max-h-16 hidden" />
+                        <span class="text-primary-500 text-3xl font-extrabold">Sindicato</span>
+                        <span class="text-secondary-500 text-3xl font-light ml-1">na Rede</span>
+                    </a>
+                </div>
+                
+                <!-- Desktop menu -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-center space-x-8">
+                        <a href="#recursos" class="text-neutral-500 hover:text-primary-500 px-2 py-1 text-sm font-medium relative group">
+                            Recursos
+                            <span class="absolute inset-x-0 bottom-0 h-0.5 bg-primary-500 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
+                        </a>
+                        <a href="#como-funciona" class="text-neutral-500 hover:text-primary-500 px-2 py-1 text-sm font-medium relative group">
+                            Como Funciona
+                            <span class="absolute inset-x-0 bottom-0 h-0.5 bg-primary-500 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
+                        </a>
+                        <a href="#planos" class="text-neutral-500 hover:text-primary-500 px-2 py-1 text-sm font-medium relative group">
+                            Planos
+                            <span class="absolute inset-x-0 bottom-0 h-0.5 bg-primary-500 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
+                        </a>
+                        <a href="#depoimentos" class="text-neutral-500 hover:text-primary-500 px-2 py-1 text-sm font-medium relative group">
+                            Depoimentos
+                            <span class="absolute inset-x-0 bottom-0 h-0.5 bg-primary-500 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
+                        </a>
+                        <a href="#contato" class="bg-primary-500 text-white hover:bg-primary-600 ml-3 px-5 py-2.5 rounded-full text-sm font-medium transition duration-300 ease-in-out transform hover:scale-105">
+                            Contato
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button @click="isOpen = !isOpen" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-600 hover:text-primary-500 focus:outline-none" aria-controls="mobile-menu" aria-expanded="false">
+                        <i x-show="!isOpen" class="fas fa-bars text-xl"></i>
+                        <i x-show="isOpen" class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile menu -->
+        <div x-show="isOpen" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 -translate-y-10" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-10" id="mobile-menu" class="md:hidden bg-white shadow-lg">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#recursos" @click="isOpen = false" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-primary-500">Recursos</a>
+                <a href="#como-funciona" @click="isOpen = false" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-primary-500">Como Funciona</a>
+                <a href="#planos" @click="isOpen = false" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-primary-500">Planos</a>
+                <a href="#depoimentos" @click="isOpen = false" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-primary-500">Depoimentos</a>
+                <a href="#contato" @click="isOpen = false" class="block px-3 py-2 rounded-md text-base font-medium text-primary-500 bg-gray-50">Contato</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1573497620053-ea5300f94f21?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80');">
+        <div class="absolute inset-0 gradient-mask"></div>
+        <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight text-white mb-6 animate-fade-in-up">
+                Seu <span class="text-primary-400">Sindicato</span> com Site Próprio
+            </h1>
+            <p class="max-w-2xl mx-auto text-xl md:text-2xl text-gray-200 mb-10 animate-fade-in-up" style="animation-delay: 0.2s">
+                A solução digital completa para modernizar a comunicação do seu sindicato
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up" style="animation-delay: 0.4s">
+                <a href="#planos" class="w-full sm:w-auto bg-primary-500 hover:bg-primary-600 text-white font-medium py-3 px-8 rounded-full inline-flex items-center justify-center transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                    <span>Começar Agora</span>
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+                <a href="#recursos" class="w-full sm:w-auto bg-secondary-500 bg-opacity-20 backdrop-blur-sm hover:bg-opacity-30 text-white font-medium py-3 px-8 rounded-full inline-flex items-center justify-center transition-all duration-300 border border-white border-opacity-40">
+                    <i class="fas fa-play-circle mr-2"></i>
+                    <span>Saiba Mais</span>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Wave separator -->
+        <div class="absolute bottom-0 left-0 w-full">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 120" fill="#f9fafb">
+                <path d="M0,64L60,58.7C120,53,240,43,360,48C480,53,600,75,720,80C840,85,960,75,1080,69.3C1200,64,1320,64,1380,64L1440,64L1440,120L1380,120C1320,120,1200,120,1080,120C960,120,840,120,720,120C600,120,480,120,360,120C240,120,120,120,60,120L0,120Z"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Recursos do Site - Principal revisado -->
+    <section id="recursos" class="py-24 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4 scroll-fade">Site Personalizado com Ferramentas Integradas</h2>
+                <p class="max-w-3xl mx-auto text-lg text-gray-600 scroll-fade">Modernize a comunicação do seu sindicato com um site completo e ferramentas exclusivas</p>
+            </div>
+            
+            <!-- Bloco introdutório revisado -->
+            <div class="mb-16">
+                <div class="bg-secondary-50/50 p-8 rounded-2xl shadow-lg scroll-fade max-w-4xl mx-auto">
+                    <div class="text-center mb-6">
+                        <div class="w-16 h-16 bg-primary-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-rocket text-2xl text-primary-500"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-neutral-500">Solução Digital Completa para Sindicatos</h3>
+                    </div>
+                    
+                    <p class="text-neutral-400 mb-8 text-center max-w-3xl mx-auto">Oferecemos um site profissional com todas as ferramentas que seu sindicato precisa para se comunicar com eficiência, gerenciar conteúdo e engajar seus associados.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-white p-5 rounded-xl shadow">
+                            <h4 class="text-lg font-bold mb-3 text-primary-500 flex items-center">
+                                <i class="fas fa-laptop-code mr-2"></i>
+                                <span>Site Responsivo Personalizado</span>
+                            </h4>
+                            <p class="text-neutral-400 mb-3">Escolha entre dois modelos exclusivos com design adaptado à identidade do seu sindicato.</p>
+                        </div>
+                        
+                        <div class="bg-white p-5 rounded-xl shadow">
+                            <h4 class="text-lg font-bold mb-3 text-primary-500 flex items-center">
+                                <i class="fas fa-tools mr-2"></i>
+                                <span>Ferramentas Integradas</span>
+                            </h4>
+                            <p class="text-neutral-400 mb-3">Todas as funcionalidades que seu sindicato precisa reunidas em uma única plataforma.</p>
+                    </div>
+                    
+                        <div class="bg-white p-5 rounded-xl shadow">
+                            <h4 class="text-lg font-bold mb-3 text-primary-500 flex items-center">
+                                <i class="fas fa-server mr-2"></i>
+                                <span>Hospedagem Incluída</span>
+                            </h4>
+                            <p class="text-neutral-400 mb-3">Todo o suporte técnico necessário para manter seu site no ar com segurança e velocidade.</p>
+                        </div>
+                        
+                        <div class="bg-white p-5 rounded-xl shadow">
+                            <h4 class="text-lg font-bold mb-3 text-primary-500 flex items-center">
+                                <i class="fas fa-headset mr-2"></i>
+                                <span>Suporte Contínuo</span>
+                            </h4>
+                            <p class="text-neutral-400 mb-3">Suporte técnico e treinamento para sua equipe utilizar todos os recursos disponíveis.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ferramentas Integradas - título existente -->
+            <h3 class="text-2xl font-bold text-center mb-8 text-neutral-500 scroll-fade">Ferramentas Poderosas Incluídas</h3>
+            
+            <!-- Grid de recursos - permanece igual -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <!-- Gestão de Conteúdo - Corrigido -->
+              <div class="bg-white p-6 rounded-xl shadow-lg card-hover scroll-fade">
+                  <div class="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center mb-4">
+                      <i class="fas fa-copy text-xl text-primary-500"></i>
+                  </div>
+                  <h4 class="text-lg font-bold mb-2 text-neutral-500">Gestão de Conteúdo</h4>
+                  <p class="text-neutral-400 mb-3">Crie páginas ilimitadas, organize seu conteúdo e mantenha seu site sempre atualizado.</p>
+                  <ul class="space-y-1 text-neutral-400 text-sm">
+                      <li class="flex items-start">
+                          <i class="fas fa-check-circle text-primary-500 mt-0.5 mr-2 text-xs"></i>
+                          <span>Criação de páginas sem limite</span>
+                      </li>
+                      <li class="flex items-start">
+                          <i class="fas fa-check-circle text-primary-500 mt-0.5 mr-2 text-xs"></i>
+                          <span>Editor de texto simples e intuitivo</span>
+                      </li>
+                  </ul>
+              </div>
+              
+              <!-- Gestão de Usuários -->
+              <div class="bg-white p-6 rounded-xl shadow-lg card-hover scroll-fade">
+                  <div class="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center mb-4">
+                      <i class="fas fa-users text-xl text-primary-500"></i>
+                  </div>
+                  <h4 class="text-lg font-bold mb-2 text-neutral-500">Gestão de Usuários</h4>
+                  <p class="text-neutral-400 mb-3">Cadastre e gerencie membros do sindicato com diferentes níveis de acesso ao site.</p>
+                  <ul class="space-y-1 text-neutral-400 text-sm">
+                      <li class="flex items-start">
+                          <i class="fas fa-check-circle text-primary-500 mt-0.5 mr-2 text-xs"></i>
+                          <span>Criação e gerenciamento de usuários</span>
+                      </li>
+                      <li class="flex items-start">
+                          <i class="fas fa-check-circle text-primary-500 mt-0.5 mr-2 text-xs"></i>
+                          <span>Controle de permissões</span>
+                      </li>
+                  </ul>
+              </div>
+              
+              <!-- Blog e Notícias -->
+              <div class="bg-white p-6 rounded-xl shadow-lg card-hover scroll-fade">
+                <div class="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center mb-4">
+                    <i class="fas fa-newspaper text-xl text-primary-500"></i>
+                </div>
+                <h4 class="text-lg font-bold mb-2 text-neutral-500">Notícias</h4>
+                <p class="text-neutral-400 mb-3">Mantenha seus associados informados com notícias e atualizações importantes do sindicato.</p>
+                <ul class="space-y-1 text-neutral-400 text-sm">
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-primary-500 mt-0.5 mr-2 text-xs"></i>
+                        <span>Sistema de notícias e comunicados</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-primary-500 mt-0.5 mr-2 text-xs"></i>
+                        <span>Categorias para organização</span>
+                    </li>
+                </ul>
+            </div>
+              
+              <!-- Publicações -->
+              <div class="bg-white p-6 rounded-xl shadow-lg card-hover scroll-fade">
+                  <div class="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center mb-4">
+                      <i class="fas fa-book text-xl text-primary-500"></i>
+                  </div>
+                  <h4 class="text-lg font-bold mb-2 text-neutral-500">Jornais e Publicações</h4>
+                  <p class="text-neutral-400 mb-3">Compartilhe jornais, boletins e outras publicações do seu sindicato em formato digital.</p>
+                  <ul class="space-y-1 text-neutral-400 text-sm">
+                      <li class="flex items-start">
+                          <i class="fas fa-check-circle text-primary-500 mt-0.5 mr-2 text-xs"></i>
+                          <span>Biblioteca de publicações</span>
+                      </li>
+                      <li class="flex items-start">
+                          <i class="fas fa-check-circle text-primary-500 mt-0.5 mr-2 text-xs"></i>
+                          <span>Visualizador de PDF interativo</span>
+                      </li>
+                  </ul>
+              </div>
+              
+              <!-- Enquetes -->
+              <div class="bg-white p-6 rounded-xl shadow-lg card-hover scroll-fade">
+                  <div class="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center mb-4">
+                      <i class="fas fa-poll text-xl text-primary-500"></i>
+                  </div>
+                  <h4 class="text-lg font-bold mb-2 text-neutral-500">Sistema de Enquetes</h4>
+                  <p class="text-neutral-400 mb-3">Crie pesquisas e enquetes para coletar feedback e opiniões dos seus associados.</p>
+                  <ul class="space-y-1 text-neutral-400 text-sm">
+                      <li class="flex items-start">
+                          <i class="fas fa-check-circle text-primary-500 mt-0.5 mr-2 text-xs"></i>
+                          <span>Criação de enquetes personalizadas</span>
+                      </li>
+                      <li class="flex items-start">
+                          <i class="fas fa-check-circle text-primary-500 mt-0.5 mr-2 text-xs"></i>
+                          <span>Visualização de resultados em tempo real</span>
+                      </li>
+                  </ul>
+              </div>
+              
+              <!-- Banners -->
+              <div class="bg-white p-6 rounded-xl shadow-lg card-hover scroll-fade">
+                  <div class="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center mb-4">
+                      <i class="fas fa-image text-xl text-primary-500"></i>
+                  </div>
+                  <h4 class="text-lg font-bold mb-2 text-neutral-500">Gestão de Banners</h4>
+                  <p class="text-neutral-400 mb-3">Adicione banners e destaques para comunicar informações importantes no seu site.</p>
+                  <ul class="space-y-1 text-neutral-400 text-sm">
+                      <li class="flex items-start">
+                          <i class="fas fa-check-circle text-primary-500 mt-0.5 mr-2 text-xs"></i>
+                          <span>Banners rotativos no site</span>
+                      </li>
+                      <li class="flex items-start">
+                          <i class="fas fa-check-circle text-primary-500 mt-0.5 mr-2 text-xs"></i>
+                          <span>Agendamento de datas para exibição</span>
+                      </li>
+                  </ul>
+              </div>
+              
+              <!-- Formulários -->
+              <div class="bg-white p-6 rounded-xl shadow-lg card-hover scroll-fade">
+                  <div class="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center mb-4">
+                      <i class="fas fa-file-alt text-xl text-primary-500"></i>
+                  </div>
+                  <h4 class="text-lg font-bold mb-2 text-neutral-500">Formulários Personalizados</h4>
+                  <p class="text-neutral-400 mb-3">Crie formulários para contato, inscrições em eventos ou coleta de dados específicos.</p>
+                  <ul class="space-y-1 text-neutral-400 text-sm">
+                      <li class="flex items-start">
+                          <i class="fas fa-check-circle text-primary-500 mt-0.5 mr-2 text-xs"></i>
+                          <span>Editor de formulários intuitivo</span>
+                      </li>
+                      <li class="flex items-start">
+                          <i class="fas fa-check-circle text-primary-500 mt-0.5 mr-2 text-xs"></i>
+                          <span>Gerenciamento de submissões</span>
+                      </li>
+                  </ul>
+              </div>
+              
+              <!-- Múltiplos Idiomas -->
+              <div class="bg-white p-6 rounded-xl shadow-lg card-hover scroll-fade">
+                  <div class="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center mb-4">
+                      <i class="fas fa-language text-xl text-primary-500"></i>
+                  </div>
+                  <h4 class="text-lg font-bold mb-2 text-neutral-500">Suporte Multilíngue</h4>
+                  <p class="text-neutral-400 mb-3">Ofereça seu conteúdo em diferentes idiomas para ampliar o alcance do seu sindicato.</p>
+                  <ul class="space-y-1 text-neutral-400 text-sm">
+                            <li class="flex items-start">
+                          <i class="fas fa-check-circle text-primary-500 mt-0.5 mr-2 text-xs"></i>
+                          <span>Tradução e gestão de conteúdo</span>
+                            </li>
+                            <li class="flex items-start">
+                          <i class="fas fa-check-circle text-primary-500 mt-0.5 mr-2 text-xs"></i>
+                          <span>Seletor de idiomas no site</span>
+                            </li>
+                        </ul>
+            </div>
+            
+              <!-- Remover "Design Personalizado" e substituir com outro recurso -->
+              <div class="bg-white p-6 rounded-xl shadow-lg card-hover scroll-fade">
+                  <div class="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center mb-4">
+                      <i class="fas fa-calendar-alt text-xl text-primary-500"></i>
+                  </div>
+                  <h4 class="text-lg font-bold mb-2 text-neutral-500">Agenda de Eventos</h4>
+                  <p class="text-neutral-400 mb-3">Organize e divulgue os eventos e reuniões do seu sindicato com uma ferramenta completa de calendário.</p>
+                  <ul class="space-y-1 text-neutral-400 text-sm">
+                      <li class="flex items-start">
+                          <i class="fas fa-check-circle text-primary-500 mt-0.5 mr-2 text-xs"></i>
+                          <span>Calendário interativo</span>
+                      </li>
+                      <li class="flex items-start">
+                          <i class="fas fa-check-circle text-primary-500 mt-0.5 mr-2 text-xs"></i>
+                          <span>Notificações de eventos</span>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+            
+            <!-- CTA após recursos -->
+            <div class="mt-12 text-center">
+                <a href="#contato" class="inline-flex items-center justify-center bg-primary-500 hover:bg-primary-600 text-white font-medium py-3 px-8 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl">
+                    <span>Conheça todas as ferramentas</span>
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Como Funciona - Sem ícones, apenas numeração -->
+    <section id="como-funciona" class="py-24 bg-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4 scroll-fade">Como Funciona</h2>
+                <p class="max-w-3xl mx-auto text-lg text-gray-600 scroll-fade">Criamos seu site em três etapas simples e objetivas</p>
+            </div>
+            
+            <div class="relative">
+                <!-- Timeline connector -->
+                <div class="hidden md:block absolute left-1/2 top-0 w-1 h-full bg-secondary-200 -translate-x-1/2"></div>
+                
+                <!-- Steps -->
+                <div class="space-y-24">
+                    <!-- Step 1 -->
+                    <div class="relative flex flex-col md:flex-row items-center scroll-fade">
+                        <div class="md:w-1/2 md:pr-12 mb-8 md:mb-0 text-center md:text-right">
+                            <div class="mb-4">
+                                <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary-100 text-primary-500 text-2xl font-bold">1</span>
+                            </div>
+                            <h3 class="text-xl font-bold mb-2 text-neutral-500">Identidade Visual</h3>
+                            <p class="text-neutral-400">Envie sua logo e identidade visual do sindicato, incluindo cores, fontes e materiais existentes para integrarmos ao seu novo site.</p>
+                        </div>
+                        <div class="md:w-1/2 md:pl-12 relative">
+                           
+                            <div class="bg-white p-6 rounded-2xl shadow-lg">
+                                <img src="https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" alt="Identidade Visual" class="w-full h-60 object-cover rounded-lg">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 2 -->
+                    <div class="relative flex flex-col md:flex-row-reverse items-center scroll-fade">
+                        <div class="md:w-1/2 md:pl-12 mb-8 md:mb-0 text-center md:text-left">
+                            <div class="mb-4">
+                                <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary-100 text-primary-500 text-2xl font-bold">2</span>
+                            </div>
+                            <h3 class="text-xl font-bold mb-2 text-neutral-500">Definição de Conteúdo</h3>
+                            <p class="text-neutral-400">Trabalhamos juntos para definir a estrutura do site, páginas necessárias e organização do conteúdo para melhor atender seus associados.</p>
+                        </div>
+                        <div class="md:w-1/2 md:pr-12 relative">
+                            <div class="bg-white p-6 rounded-2xl shadow-lg">
+                                <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" alt="Planejamento de Conteúdo" class="w-full h-60 object-cover rounded-lg">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 3 -->
+                    <div class="relative flex flex-col md:flex-row items-center scroll-fade">
+                        <div class="md:w-1/2 md:pr-12 mb-8 md:mb-0 text-center md:text-right">
+                            <div class="mb-4">
+                                <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary-100 text-primary-500 text-2xl font-bold">3</span>
+                            </div>
+                            <h3 class="text-xl font-bold mb-2 text-neutral-500">Publicação e Lançamento</h3>
+                            <p class="text-neutral-400">Publicamos seu site, realizamos testes finais e oferecemos treinamento para que sua equipe possa gerenciar o conteúdo com facilidade.</p>
+                        </div>
+                        <div class="md:w-1/2 md:pl-12 relative">
+                            <div class="bg-white p-6 rounded-2xl shadow-lg">
+                                <img src="https://images.unsplash.com/photo-1600267204091-5c1ab8b10c02?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" alt="Lançamento do Site" class="w-full h-60 object-cover rounded-lg">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Benefícios adicionais -->
+            <div class="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8 scroll-fade">
+                <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+                    <div class="w-14 h-14 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-bolt text-xl text-primary-500"></i>
+                    </div>
+                    <h4 class="text-lg font-bold mb-2 text-neutral-500">Processo Rápido</h4>
+                    <p class="text-neutral-400">Do início ao lançamento, todo o processo leva em média apenas 2 semanas.</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+                    <div class="w-14 h-14 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-hands-helping text-xl text-primary-500"></i>
+                    </div>
+                    <h4 class="text-lg font-bold mb-2 text-neutral-500">Suporte Contínuo</h4>
+                    <p class="text-neutral-400">Após o lançamento, continuamos oferecendo suporte para garantir o sucesso do seu site.</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+                    <div class="w-14 h-14 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-sync-alt text-xl text-primary-500"></i>
+                    </div>
+                    <h4 class="text-lg font-bold mb-2 text-neutral-500">Atualizações Inclusas</h4>
+                    <p class="text-neutral-400">Receba atualizações periódicas com novos recursos e melhorias de segurança.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Planos e Preços - Outros marcados como "Em breve" -->
+    <section id="planos" class="py-24 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-16">
+              <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4 scroll-fade">Planos para Todos os Sindicatos</h2>
+              <p class="max-w-3xl mx-auto text-lg text-gray-600 scroll-fade">Escolha o pacote ideal com site e ferramentas para o seu sindicato</p>
+          </div>
+          
+          <div class="flex flex-wrap justify-center items-stretch -mx-4">
+                <!-- Plano Site - Disponível -->
+              <div class="w-full md:w-1/3 px-4 mb-8 md:mb-0">
+                    <div class="h-full bg-white border-2 border-primary-500 rounded-3xl shadow-xl transition-all duration-300 hover:shadow-2xl overflow-hidden flex flex-col relative scroll-fade">
+                        <div class="absolute top-0 right-0">
+                            <span class="inline-block bg-secondary-500 text-white text-xs font-semibold px-3 py-1.5 rounded-bl-lg">DISPONÍVEL</span>
+                        </div>
+                        <div class="p-8 border-b border-gray-100 bg-primary-50">
+                          <h3 class="text-xl font-bold text-neutral-500 mb-2">Site</h3>
+                          <div class="flex items-baseline">
+                              <span class="text-4xl font-extrabold text-primary-500">R$599</span>
+                              <span class="text-gray-500 ml-1">/mês</span>
+                          </div>
+                            <p class="mt-4 text-neutral-400">Ideal para sindicatos que estão começando sua jornada digital.</p>
+                      </div>
+                      <div class="flex-grow p-8 bg-gray-50">
+                          <ul class="space-y-4">
+                              <li class="flex items-start">
+                                  <i class="fas fa-check-circle text-primary-500 mt-1 mr-3"></i>
+                                  <span class="text-neutral-400">Site responsivo completo</span>
+                              </li>
+                              <li class="flex items-start">
+                                  <i class="fas fa-check-circle text-primary-500 mt-1 mr-3"></i>
+                                  <span class="text-neutral-400">Gerenciador de conteúdo</span>
+                              </li>
+                              <li class="flex items-start">
+                                  <i class="fas fa-check-circle text-primary-500 mt-1 mr-3"></i>
+                                  <span class="text-neutral-400">Ferramentas básicas</span>
+                              </li>
+                              <li class="flex items-start">
+                                  <i class="fas fa-check-circle text-primary-500 mt-1 mr-3"></i>
+                                    <span class="text-neutral-400">Hospedagem incluída</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-primary-500 mt-1 mr-3"></i>
+                                    <span class="text-neutral-400">Suporte técnico</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="p-8">
+                            <a href="#contato" class="block w-full bg-primary-500 hover:bg-primary-600 text-white text-center font-medium py-3 px-6 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl">
+                                Começar Teste Grátis
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Plano Site + Intranet - Em breve -->
+                <div class="w-full md:w-1/3 px-4 mb-8 md:mb-0">
+                    <div class="h-full bg-white border border-gray-200 rounded-3xl shadow-lg transition-all duration-300 hover:shadow-xl overflow-hidden flex flex-col scroll-fade opacity-75" style="transition-delay: 0.2s">
+                        <div class="absolute top-0 right-0">
+                            <span class="inline-block bg-gray-500 text-white text-xs font-semibold px-3 py-1.5 rounded-bl-lg">EM BREVE</span>
+                        </div>
+                        <div class="p-8 border-b border-gray-100">
+                            <h3 class="text-xl font-bold text-neutral-500 mb-2">Site + Intranet</h3>
+                            <div class="flex items-baseline">
+                                <span class="text-4xl font-extrabold text-gray-400">R$999</span>
+                                <span class="text-gray-500 ml-1">/mês</span>
+                            </div>
+                            <p class="mt-4 text-neutral-400">Perfeito para sindicatos de médio porte com necessidades mais avançadas.</p>
+                        </div>
+                        <div class="flex-grow p-8 bg-gray-50">
+                            <ul class="space-y-4">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-gray-400 mt-1 mr-3"></i>
+                                    <span class="text-neutral-400">Tudo do plano Site</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-gray-400 mt-1 mr-3"></i>
+                                    <span class="text-neutral-400">Área interna exclusiva</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-gray-400 mt-1 mr-3"></i>
+                                    <span class="text-neutral-400">Gestão de associados</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-gray-400 mt-1 mr-3"></i>
+                                    <span class="text-neutral-400">Documentos protegidos</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="p-8">
+                            <button class="block w-full bg-gray-300 text-gray-600 text-center font-medium py-3 px-6 rounded-full cursor-not-allowed">
+                                Em breve
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Plano Site + Intranet + App - Em breve -->
+                <div class="w-full md:w-1/3 px-4">
+                    <div class="h-full bg-white border border-gray-200 rounded-3xl shadow-lg transition-all duration-300 hover:shadow-xl overflow-hidden flex flex-col scroll-fade opacity-75" style="transition-delay: 0.4s">
+                        <div class="absolute top-0 right-0">
+                            <span class="inline-block bg-gray-500 text-white text-xs font-semibold px-3 py-1.5 rounded-bl-lg">EM BREVE</span>
+                        </div>
+                        <div class="p-8 border-b border-gray-100">
+                            <h3 class="text-xl font-bold text-neutral-500 mb-2">Site + Intranet + App</h3>
+                            <div class="flex items-baseline">
+                                <span class="text-4xl font-extrabold text-gray-400">R$1.499</span>
+                                <span class="text-gray-500 ml-1">/mês</span>
+                            </div>
+                            <p class="mt-4 text-neutral-400">Para grandes sindicatos que precisam de recursos completos em todas as plataformas.</p>
+                        </div>
+                        <div class="flex-grow p-8 bg-gray-50">
+                            <ul class="space-y-4">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-gray-400 mt-1 mr-3"></i>
+                                    <span class="text-neutral-400">Tudo do plano Site + Intranet</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-gray-400 mt-1 mr-3"></i>
+                                    <span class="text-neutral-400">Aplicativo personalizado</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-gray-400 mt-1 mr-3"></i>
+                                    <span class="text-neutral-400">Notificações push</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-gray-400 mt-1 mr-3"></i>
+                                    <span class="text-neutral-400">Suporte prioritário 24/7</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="p-8">
+                            <button class="block w-full bg-gray-300 text-gray-600 text-center font-medium py-3 px-6 rounded-full cursor-not-allowed">
+                                Em breve
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-16 text-center bg-gray-50 p-8 rounded-2xl shadow-sm scroll-fade">
+                <h3 class="text-xl font-bold text-gray-900 mb-4">Precisa de um plano personalizado?</h3>
+                <p class="text-gray-600 mb-6">Se você tem necessidades específicas, entre em contato com nossa equipe para uma solução sob medida.</p>
+                <a href="#contato" class="inline-flex items-center justify-center bg-gray-800 hover:bg-gray-900 text-white font-medium py-3 px-8 rounded-full transition-all duration-300">
+                    <i class="fas fa-headset mr-2"></i>
+                    <span>Fale com um Especialista</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Depoimentos -->
+    <section id="depoimentos" class="py-24 bg-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4 scroll-fade">O Que Dizem Nossos Clientes</h2>
+                <p class="max-w-3xl mx-auto text-lg text-gray-600 scroll-fade">Sindicatos de todo o Brasil já transformaram sua presença digital com nossos sites e ferramentas</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Depoimento 1 -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg scroll-fade">
+                    <div class="flex items-center mb-6">
+                        <div class="text-primary-500 text-2xl">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-6">"O Sindicato na Rede transformou a forma como nos comunicamos com os associados. Antes, era difícil alcançar todos os membros, agora temos engagement recorde."</p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="João Silva" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-bold text-gray-900">João Silva</h4>
+                            <p class="text-gray-600 text-sm">Presidente, Sindicato dos Metalúrgicos</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex text-primary-500">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                
+                <!-- Depoimento 2 -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg scroll-fade" style="transition-delay: 0.2s">
+                    <div class="flex items-center mb-6">
+                        <div class="text-primary-500 text-2xl">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-6">"Uma plataforma indispensável para qualquer sindicato moderno. Conseguimos reduzir nossos custos administrativos em 40% e aumentar a participação nas assembleias."</p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Maria Oliveira" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-bold text-gray-900">Maria Oliveira</h4>
+                            <p class="text-gray-600 text-sm">Diretora, Sindicato dos Professores</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex text-primary-500">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                
+                <!-- Depoimento 3 -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg scroll-fade" style="transition-delay: 0.4s">
+                    <div class="flex items-center mb-6">
+                        <div class="text-primary-500 text-2xl">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-6">"Facilitou muito a gestão e comunicação com nossos associados. O sistema de votação digital foi crucial para mantermos nossas atividades durante a pandemia."</p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/men/68.jpg" alt="Carlos Pereira" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-bold text-gray-900">Carlos Pereira</h4>
+                            <p class="text-gray-600 text-sm">Secretário, Sindicato dos Bancários</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex text-primary-500">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Logos de clientes -->
+            <div class="mt-20">
+                <p class="text-center text-gray-500 mb-8 scroll-fade">Confie em quem já confia em nós</p>
+                <div class="flex flex-wrap justify-center items-center gap-8 opacity-70">
+                    <img src="https://via.placeholder.com/150x60/f3f4f6/71717a?text=Cliente+1" alt="Cliente 1" class="h-10">
+                    <img src="https://via.placeholder.com/150x60/f3f4f6/71717a?text=Cliente+2" alt="Cliente 2" class="h-10">
+                    <img src="https://via.placeholder.com/150x60/f3f4f6/71717a?text=Cliente+3" alt="Cliente 3" class="h-10">
+                    <img src="https://via.placeholder.com/150x60/f3f4f6/71717a?text=Cliente+4" alt="Cliente 4" class="h-10">
+                    <img src="https://via.placeholder.com/150x60/f3f4f6/71717a?text=Cliente+5" alt="Cliente 5" class="h-10">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contato -->
+    <section id="contato" class="py-24 bg-white relative">
+        <div class="absolute left-0 top-0 w-full h-64 bg-secondary-600"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+                <div class="grid grid-cols-1 md:grid-cols-2">
+                    <div class="bg-secondary-600 p-12 text-white">
+                        <h2 class="text-3xl font-bold mb-6">Entre em Contato</h2>
+                        <p class="mb-8">Estamos prontos para atender seu sindicato e transformar sua comunicação. Preencha o formulário e um especialista entrará em contato.</p>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-map-marker-alt mt-1.5 text-primary-300"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="text-sm font-medium text-primary-300">Endereço</h4>
+                                    <p>
+                                        R. Benedito Osvaldo Lecques, 51 - Sala 705 - Jd Aquarius 
+                                        <br>São José dos Campos - São Paulo - CEP: 12246-021
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-phone-alt mt-1.5 text-primary-300"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="text-sm font-medium text-primary-300">Telefone</h4>
+                                    <p>(12) 3901-7245</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-envelope mt-1.5 text-primary-300"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="text-sm font-medium text-primary-300">Email</h4>
+                                    <p>info@datalogix.com.br</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-12">
+                            <h4 class="text-lg font-medium mb-4">Siga-nos</h4>
+                            <div class="flex space-x-4">
+                                <a href="#" class="bg-primary-800 hover:bg-primary-900 h-10 w-10 rounded-full flex items-center justify-center transition-colors duration-300">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                                <a href="#" class="bg-primary-800 hover:bg-primary-900 h-10 w-10 rounded-full flex items-center justify-center transition-colors duration-300">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                                <a href="#" class="bg-primary-800 hover:bg-primary-900 h-10 w-10 rounded-full flex items-center justify-center transition-colors duration-300">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                                <a href="#" class="bg-primary-800 hover:bg-primary-900 h-10 w-10 rounded-full flex items-center justify-center transition-colors duration-300">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="p-12">
+                        <form>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
+                                <div>
+                                    <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nome</label>
+                                    <input type="text" id="name" name="name" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all">
+                                </div>
+                                <div>
+                                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                    <input type="email" id="email" name="email" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all">
+                                </div>
+                            </div>
+                            
+                            <div class="mb-6">
+                                <label for="sindicato" class="block text-sm font-medium text-gray-700 mb-1">Nome do Sindicato</label>
+                                <input type="text" id="sindicato" name="sindicato" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all">
+                            </div>
+                            
+                            <div class="mb-6">
+                                <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Telefone</label>
+                                <input type="tel" id="phone" name="phone" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all">
+                            </div>
+                            
+                            <div class="mb-6">
+                                <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Mensagem</label>
+                                <textarea id="message" name="message" rows="4" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"></textarea>
+                            </div>
+                            
+                            <div class="mb-6">
+                                <label class="inline-flex items-center">
+                                    <input type="checkbox" class="rounded border-gray-300 text-primary-600 focus:ring-primary-500">
+                                    <span class="ml-2 text-sm text-gray-600">Concordo em receber informações sobre o Sindicato na Rede</span>
+                                </label>
+                            </div>
+                            
+                            <button type="submit" class="w-full bg-primary-500 hover:bg-primary-600 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-300 transform hover:scale-[1.02]">
+                                Enviar Mensagem
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rodapé -->
+    <footer class="bg-neutral-800 text-white py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <!-- Logo e slogan -->
+            <a href="#" class="inline-block mb-3">
+                <span class="text-white text-xl font-extrabold">Sindicato</span>
+                <span class="text-primary-400 text-xl font-light">na Rede</span>
+            </a>
+            <p class="text-gray-400 mb-4">Transformando a comunicação sindical na era digital.</p>
+            
+            <!-- Redes sociais -->
+            <div class="flex justify-center space-x-6 mb-6">
+                <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+            </div>
+            
+            <!-- Copyright -->
+            <p class="text-gray-400 text-sm">&copy; 2025 Sindicato na Rede. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts de animação e scroll -->
+    <script>
+        // Script para animação dos elementos com scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollFadeElements = document.querySelectorAll('.scroll-fade');
+            
+            const checkScroll = function() {
+                scrollFadeElements.forEach(element => {
+                    const rect = element.getBoundingClientRect();
+                    const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+                    
+                    if (rect.top <= windowHeight * 0.85) {
+                        element.classList.add('visible');
+                    }
+                });
+            };
+            
+            // Verificar elementos na carga inicial
+            checkScroll();
+            
+            // Verificar ao fazer scroll
+            window.addEventListener('scroll', checkScroll);
+        });
+    </script>
+
+    <a href="#" class="fixed bottom-4 right-4 bg-primary-500 text-white p-3 rounded-full shadow-lg">
+      <i class="fas fa-arrow-up"></i>
+    </a>
+</body>
+</html>
