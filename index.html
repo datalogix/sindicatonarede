@@ -113,6 +113,9 @@
             })
                 .then(() => alert("Obrigado! Em breve entraremos em contato."))
                 .catch(error => alert(error));
+
+            event.currentTarget.reset();
+            window.location.hash = '#';
         };
 
         document.addEventListener('DOMContentLoaded', function () {
@@ -608,10 +611,10 @@
                         </div>
                         <div class="p-8 border-b border-gray-100">
                             <h3 class="text-xl font-bold text-neutral-500 mb-2">Site + App</h3>
-                            <div class="flex items-baseline">
-                                <span class="text-4xl font-extrabold text-gray-400">R$999</span>
+                            <!--<div class="flex items-baseline">
+                                <span class="text-4xl font-extrabold text-gray-400">R$</span>
                                 <span class="text-gray-500 ml-1">/mês</span>
-                            </div>
+                            </div>-->
                             <p class="mt-4 text-neutral-400">Perfeito para sindicatos de médio porte com necessidades mais avançadas.</p>
                         </div>
                         <div class="flex-grow p-8 bg-gray-50">
@@ -650,10 +653,10 @@
                         </div>
                         <div class="p-8 border-b border-gray-100">
                             <h3 class="text-xl font-bold text-neutral-500 mb-2">Site + Intranet + App</h3>
-                            <div class="flex items-baseline">
-                                <span class="text-4xl font-extrabold text-gray-400">R$1.499</span>
+                            <!--<div class="flex items-baseline">
+                                <span class="text-4xl font-extrabold text-gray-400">R$</span>
                                 <span class="text-gray-500 ml-1">/mês</span>
-                            </div>
+                            </div>-->
                             <p class="mt-4 text-neutral-400">Para grandes sindicatos que precisam de recursos completos em todas as plataformas.</p>
                         </div>
                         <div class="flex-grow p-8 bg-gray-50">
